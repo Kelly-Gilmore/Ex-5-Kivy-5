@@ -3,22 +3,39 @@
     FloatLayout:
         size_hint: None, None
 
-    DPEAButton:
-        id: test_button
-        text: 'test'
-        size: 100, 100
-        x: root.width * 0.75
-        y: root.height * 0.5
-        color: 0, 1, 0, 1
-        on_press: root.pressed()
+
+
 
     DPEAButton:
-        text: "test2"
+        id: test_button
+        text: "On" if test_button.state == "normal" else "Off"
         size: 100, 100
-        x: root.width * 0.25
+        x: root.width * 0.65
+        y: root.height * 0.5
+        color: 0, 1, 0, 1
+        #on_press: root.pressed()
+
+    DPEAButton:
+        text: "Click Me: " + root.label_text
+        size: 250, 100
+        x: root.width * 0.15
         y:root.height * 0.5
         color: 1, 0, 0, 1
-        on_press: root.pressed()
+        on_press: root.increment()
+
+    DPEAButton:
+        id: test_button
+        text: "Motor"
+        size: 200, 100
+        x: root.width * 0.5
+        y: root.width * 0.2
+        color: 0.75, 1, 0, 1
+        on_press: root.motor()
+
+    Label:
+        id: on_off_label
+        text: text_label
+
 
     ImageButton:
         id: logo_image_button

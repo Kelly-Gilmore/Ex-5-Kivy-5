@@ -4,6 +4,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.properties import StringProperty
 
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
@@ -39,6 +40,23 @@ class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
+    label_text = StringProperty()
+    text_label = StringProperty()
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+        self.count = 0
+        self.label_text = str(self.count)
+
+    def increment(self, *args):
+        self.count += 1
+        self.label_text = str(self.count)
+        print(self.label_text)
+
+    def motor(self):
+        pass
+
+
+
 
     def pressed(self):
         """
@@ -62,6 +80,8 @@ class AdminScreen(Screen):
     """
 
     def __init__(self, **kwargs):
+
+
         """
         Load the AdminScreen.kv file. Set the necessary names of the screens for the PassCodeScreen to transition to.
         Lastly super Screen's __init__
