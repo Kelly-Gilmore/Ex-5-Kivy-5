@@ -7,7 +7,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
 from kivy.uix.slider import Slider
+from kivy.animation import Animation
 
+from pidev.Joystick import Joystick
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
 from pidev.kivy.PauseScreen import PauseScreen
