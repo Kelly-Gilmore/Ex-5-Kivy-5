@@ -4,6 +4,14 @@
         size_hint: None, None
 
 
+    Slider:
+        id: sheep
+        min: 0
+        max: 100
+        step: 1
+        orientation: "horizontal"
+        y: root.height * .3
+        color: 0, 0, 0, 1
 
 
     DPEAButton:
@@ -40,14 +48,6 @@
         y: root.height * -.2
         color: 1, 0, 0, 1
 
-    Slider:
-        id: sheep
-        min: 0
-        max: 100
-        step: 1
-        orientation: "horizontal"
-        y: root.height * .3
-        color: 0, 0, 0, 1
 
     Label:
         text: str(sheep.value)
