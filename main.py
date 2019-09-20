@@ -20,6 +20,7 @@ MIXPANEL = MixPanel("Project Name", MIXPANEL_TOKEN)
 SCREEN_MANAGER = ScreenManager()
 MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
+FARMYARD_SCREEN_NAME = 'farm'
 
 
 class ProjectNameGUI(App):
@@ -58,18 +59,15 @@ class MainScreen(Screen):
     def motor(self):
         self.braedan = not self.braedan
 
-
-
-
-
-
-
     def pressed(self):
         """
         Function called on button touch event for button with id: testButton
         :return: None
         """
         PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='main', text="Test", pause_duration=5)
+
+    def clicked(self):
+        PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=5)
 
     def admin_action(self):
         """
@@ -78,6 +76,32 @@ class MainScreen(Screen):
         :return: None
         """
         SCREEN_MANAGER.current = 'passCode'
+
+class Farmyard(Screen):
+
+    def __init__(self, **kwargs):
+
+       # Builder.load_file('Farmyard.kv')
+
+        PassCodeScreen.set_transition_back_screen(MAIN_SCREEN_NAME)
+
+        super(Farmyard, self).__init__(**kwargs)
+
+    def transition_back(self):
+
+        SCREEN_MANAGER.current = MAIN_SCREEN_NAME
+
+
+    def back(self):
+
+        PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='main', text="Test", pause_duration=5)
+
+    """
+        Function called on button touch event for button with id: testButton
+        :return: None
+    """
+        
+
 
 
 class AdminScreen(Screen):
@@ -128,11 +152,12 @@ Widget additions
 """
 
 Builder.load_file('main.kv')
+Builder.load_file('Farmyard.kv')
 SCREEN_MANAGER.add_widget(MainScreen(name=MAIN_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(PassCodeScreen(name='passCode'))
 SCREEN_MANAGER.add_widget(PauseScreen(name='pauseScene'))
 SCREEN_MANAGER.add_widget(AdminScreen(name=ADMIN_SCREEN_NAME))
-
+SCREEN_MANAGER.add_widget(Farmyard(name=FARMYARD_SCREEN_NAME))
 """
 MixPanel
 """

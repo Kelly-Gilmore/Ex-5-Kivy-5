@@ -56,12 +56,15 @@
         y: root.height * .25
         color: 1, 0, 0, 1
 
-    DPEAButton:
+    ImageButton:
         id: goat
-        text: "Another Screen"
-        Image:
-            source: Goat.jpeg
-            x: root.width * 
+        source: "Goat.jpg"
+        size: 100, 100
+        x: root.width * .3
+        y: root.height * .3
+        on_press: root.clicked()
+
+
 
 
 
