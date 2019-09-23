@@ -8,6 +8,7 @@ from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
 from kivy.uix.slider import Slider
 from kivy.animation import Animation
+from kivy.uix.behaviors import DragBehavior
 
 from pidev.Joystick import Joystick
 from pidev.MixPanel import MixPanel
@@ -73,10 +74,6 @@ class MainScreen(Screen):
     def clicked(self):
         PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=5)
 
-    def animation(self):
-        anim = Animation(x=50, y=50) & Animation(size=(200, 200))
-
-        anim.start(self.ids.logo_image_button)
 
 
 
@@ -111,7 +108,11 @@ class Farmyard(Screen):
         Function called on button touch event for button with id: testButton
         :return: None
     """
-        
+    def animation(self):
+        anim = Animation(x=50, y=50) & Animation(size=(200, 200))
+
+        anim.start(self.ids.logo_image_button)
+
 
 
 
