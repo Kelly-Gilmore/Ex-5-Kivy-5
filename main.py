@@ -47,11 +47,13 @@ class MainScreen(Screen):
     """
     label_text = StringProperty()
     braedan = ObjectProperty()
+    b1 = ObjectProperty()
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.count = 0
         self.braedan = False
         self.label_text = str(self.count)
+
 
     def increment(self, *args):
         self.count += 1
@@ -72,9 +74,10 @@ class MainScreen(Screen):
         PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=5)
 
     def animation(self):
-        anim = Animation(x=50, y=50) + Animation(size=(80, 80), duration=2.)
-        anim.start(widget=ImageButton)
-        anim.stop(widget=ImageButton)
+        anim = Animation(x=50, y=50) & Animation(size=(200, 200))
+
+        anim.start(self.ids.logo_image_button)
+
 
 
     def admin_action(self):
