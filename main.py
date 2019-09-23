@@ -71,6 +71,12 @@ class MainScreen(Screen):
     def clicked(self):
         PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=5)
 
+    def animation(self):
+        anim = Animation(x=50, y=50) + Animation(size=(80, 80), duration=2.)
+        anim.start(widget=ImageButton)
+        anim.stop(widget=ImageButton)
+
+
     def admin_action(self):
         """
         Hidden admin button touch event. Transitions to passCodeScreen.
