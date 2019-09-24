@@ -8,7 +8,9 @@ from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
 from kivy.uix.slider import Slider
 from kivy.animation import Animation
-from kivy.uix.behaviors import DragBehavior
+
+
+from threading import Thread
 
 from pidev.Joystick import Joystick
 from pidev.MixPanel import MixPanel
@@ -25,7 +27,7 @@ MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 FARMYARD_SCREEN_NAME = 'farm'
 
-joystick = Joystick(0, False)
+
 
 class ProjectNameGUI(App):
     """
@@ -70,10 +72,10 @@ class MainScreen(Screen):
         Function called on button touch event for button with id: testButton
         :return: None
         """
-        PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='main', text="Test", pause_duration=5)
+        PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='main', text="Test", pause_duration=1)
 
     def clicked(self):
-        PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=5)
+        PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=1)
 
 
 
@@ -88,8 +90,20 @@ class MainScreen(Screen):
 
 class Farmyard(Screen):
 
-    joy_val_x = ObjectProperty()
-    joy_val_y = ObjectProperty()
+    joystick = Joystick(0, False)
+    joy_val_x = ObjectProperty(0,0)
+    joy_val_y = ObjectProperty(0,0)
+
+
+    def update(self):
+
+        while 1:
+            self.ids.joystick.refresh()
+            self.ids.joy_val_x = self.joystick.get_axis('x')
+            self.ids.joy_val_y = self.joystick.get_axis('y')
+
+    def joythread(self):
+        Thread(target=self.update, args=()).start()
 
     def __init__(self, **kwargs):
 
@@ -118,9 +132,7 @@ class Farmyard(Screen):
 
         anim.start(self.ids.logo_image_button)
 
-    def joystick(self):
-        joy_val_x = Joystick.get_axis('x')
-        joy_val_y = Joystick.get_axis('y')
+
 
 
 
