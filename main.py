@@ -25,6 +25,7 @@ MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 FARMYARD_SCREEN_NAME = 'farm'
 
+joystick = Joystick(0, False)
 
 class ProjectNameGUI(App):
     """
@@ -48,7 +49,7 @@ class MainScreen(Screen):
     """
     label_text = StringProperty()
     braedan = ObjectProperty()
-    b1 = ObjectProperty()
+
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.count = 0
@@ -87,6 +88,9 @@ class MainScreen(Screen):
 
 class Farmyard(Screen):
 
+    joy_val_x = ObjectProperty()
+    joy_val_y = ObjectProperty()
+
     def __init__(self, **kwargs):
 
        # Builder.load_file('Farmyard.kv')
@@ -94,6 +98,7 @@ class Farmyard(Screen):
         PassCodeScreen.set_transition_back_screen(MAIN_SCREEN_NAME)
 
         super(Farmyard, self).__init__(**kwargs)
+
 
     def transition_back(self):
 
@@ -112,6 +117,13 @@ class Farmyard(Screen):
         anim = Animation(x=50, y=50) & Animation(size=(200, 200))
 
         anim.start(self.ids.logo_image_button)
+
+    def joystick(self):
+        joy_val_x = Joystick.get_axis('x')
+        joy_val_y = Joystick.get_axis('y')
+
+
+
 
 
 
