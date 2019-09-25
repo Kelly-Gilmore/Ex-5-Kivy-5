@@ -94,6 +94,8 @@ class Farmyard(Screen):
 
     joystick = Joystick(0, False)
     joy_val_x = ObjectProperty(0)
+    joy_val_y = ObjectProperty(0)
+    joy_trigger_label = ObjectProperty(0)
 
 
     def __init__(self, **kwargs):
@@ -107,7 +109,8 @@ class Farmyard(Screen):
 
         while 1:
             self.joy_val_x = joystick.get_axis('x')
-            self.ids.joy_label.x = self.joy_val_x
+            self.joy_val_y = joystick.get_axis('y')
+            self.joy_trigger_label = self.joystick.get_button_state(0)
             sleep(.1)
 
     def joy_thread(self):

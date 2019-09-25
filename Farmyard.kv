@@ -28,9 +28,21 @@
 
         Label:
             id: joy_label
-            text: str(root.joy_val_x)
+            text: str(root.joy_val_x) + " , " + str(root.joy_val_y)
             color: 0, 0, 0, 1
-            y: 50
+            x: root.joy_val_x * 500
+            y: root.joy_val_y * 500
+            bold: True
+
+
+        Label:
+            id: joy_trigger_label
+            text: str(root.joy_trigger_label)
+            color: 0, 0, 0, 1
+            x: root.width * .75
+            bold: True
+
+
 
 
 
