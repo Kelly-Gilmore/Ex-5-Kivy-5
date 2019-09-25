@@ -1,5 +1,7 @@
 <Farmyard>
     name: "farm"
+    on_enter:root.joy_thread()
+
 
 
     FloatLayout:
@@ -23,6 +25,13 @@
             x: root.width * 0.35
             y: root.height * 0.7
             on_press: root.animation()
+
+        Label:
+            id: joy_label
+            text: str(root.joy_val_x)
+            color: 0, 0, 0, 1
+            y: 50
+
 
 
 

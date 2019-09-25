@@ -56,24 +56,12 @@ class MainScreen(Screen):
     """
     label_text = StringProperty()
     braedan = ObjectProperty()
-    joy_val_x = ObjectProperty(0)
-    joy_val_y = ObjectProperty(0)
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.count = 0
         self.braedan = False
         self.label_text = str(self.count)
-
-    def joy_update(self):
-        while 1:
-            self.joy_val_x = joystick.get_axis('x')
-            self.ids.joy_label.x = self.joy_val_x
-            sleep(.1)
-
-    def joy_thread(self):
-        print("start thread")
-        Thread(target=self.joy_update).start()
 
     def increment(self, *args):
         self.count += 1
@@ -104,9 +92,9 @@ class MainScreen(Screen):
 
 class Farmyard(Screen):
 
-    # #joystick = Joystick(0, False)
-    # joy_val_x = ObjectProperty(0)
-    # joy_val_y = ObjectProperty(0)
+    joystick = Joystick(0, False)
+    joy_val_x = ObjectProperty(0)
+
 
     def __init__(self, **kwargs):
         Builder.load_file('Farmyard.kv')
@@ -115,16 +103,16 @@ class Farmyard(Screen):
 
         super(Farmyard, self).__init__(**kwargs)
 
-    # def update(self):
-    #
-    #     while 1:
-    #         self.joy_val_x = joystick.get_axis('x')
-    #         self.ids.joy_label.x = (self.joy_val_x)
-    #       #  self.ids.joy_val_y = self.joystick.get_axis('y')
-    #         sleep(.1)
-    #
-    # def joythread(self):
-    #     Thread(target=self.update, args=()).start()
+    def update(self):
+
+        while 1:
+            self.joy_val_x = joystick.get_axis('x')
+            self.ids.joy_label.x = self.joy_val_x
+            sleep(.1)
+
+    def joy_thread(self):
+        Thread(target=self.update, args=()).start()
+
 
     def transition_back(self):
 
