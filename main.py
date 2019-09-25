@@ -8,6 +8,7 @@ from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
 from kivy.uix.slider import Slider
 from kivy.animation import Animation
+from time import sleep
 
 
 from threading import Thread
@@ -27,6 +28,11 @@ MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 FARMYARD_SCREEN_NAME = 'farm'
 
+joystick = Joystick(0, False)
+"""while 1:
+    print(str(joystick.get_axis('x')))
+    sleep(.1) 
+"""
 
 
 class ProjectNameGUI(App):
@@ -44,13 +50,14 @@ class ProjectNameGUI(App):
 
 Window.clearcolor = (1, 1, 1, 1)  # White
 
-
 class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
     """
     label_text = StringProperty()
     braedan = ObjectProperty()
+    joy_val_x = ObjectProperty(0)
+    joy_val_y = ObjectProperty(0)
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -58,6 +65,15 @@ class MainScreen(Screen):
         self.braedan = False
         self.label_text = str(self.count)
 
+    def joy_update(self):
+        while 1:
+            self.joy_val_x = joystick.get_axis('x')
+            self.ids.joy_label.x = self.joy_val_x
+            sleep(.1)
+
+    def joy_thread(self):
+        print("start thread")
+        Thread(target=self.joy_update).start()
 
     def increment(self, *args):
         self.count += 1
@@ -77,9 +93,6 @@ class MainScreen(Screen):
     def clicked(self):
         PauseScreen.pause(pause_scene_name='pauseScene', transition_back_scene='farm', text="Test", pause_duration=1)
 
-
-
-
     def admin_action(self):
         """
         Hidden admin button touch event. Transitions to passCodeScreen.
@@ -88,31 +101,30 @@ class MainScreen(Screen):
         """
         SCREEN_MANAGER.current = 'passCode'
 
+
 class Farmyard(Screen):
 
-    joystick = Joystick(0, False)
-    joy_val_x = ObjectProperty(0,0)
-    joy_val_y = ObjectProperty(0,0)
-
-
-    def update(self):
-
-        while 1:
-            self.ids.joystick.refresh()
-            self.ids.joy_val_x = self.joystick.get_axis('x')
-            self.ids.joy_val_y = self.joystick.get_axis('y')
-
-    def joythread(self):
-        Thread(target=self.update, args=()).start()
+    # #joystick = Joystick(0, False)
+    # joy_val_x = ObjectProperty(0)
+    # joy_val_y = ObjectProperty(0)
 
     def __init__(self, **kwargs):
-
-       # Builder.load_file('Farmyard.kv')
+        Builder.load_file('Farmyard.kv')
 
         PassCodeScreen.set_transition_back_screen(MAIN_SCREEN_NAME)
 
         super(Farmyard, self).__init__(**kwargs)
 
+    # def update(self):
+    #
+    #     while 1:
+    #         self.joy_val_x = joystick.get_axis('x')
+    #         self.ids.joy_label.x = (self.joy_val_x)
+    #       #  self.ids.joy_val_y = self.joystick.get_axis('y')
+    #         sleep(.1)
+    #
+    # def joythread(self):
+    #     Thread(target=self.update, args=()).start()
 
     def transition_back(self):
 
@@ -188,7 +200,7 @@ Widget additions
 """
 
 Builder.load_file('main.kv')
-Builder.load_file('Farmyard.kv')
+# Builder.load_file('Farmyard.kv')
 SCREEN_MANAGER.add_widget(MainScreen(name=MAIN_SCREEN_NAME))
 SCREEN_MANAGER.add_widget(PassCodeScreen(name='passCode'))
 SCREEN_MANAGER.add_widget(PauseScreen(name='pauseScene'))
