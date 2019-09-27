@@ -92,7 +92,7 @@ class MainScreen(Screen):
 
 class Farmyard(Screen):
 
-    joystick = Joystick(0, False)
+    joystick = Joystick(0, True)
     joy_val_x = ObjectProperty(0)
     joy_val_y = ObjectProperty(0)
     joy_trigger_label = ObjectProperty(0)
